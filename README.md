@@ -4,15 +4,15 @@ Módulo de apoyo de los contenedores
 
 ## Para instalarlo en un proyecto poner:
 
-Crear una deploy key para la máquina cliente (id_rsa_mi_logs) en github.com (settings)
+Crear una deploy key para la máquina cliente (id_rsa_pulpo) en github.com (settings)
 
 ssh-keygen -t rsa -b 4096
 
 
 ## Estructura (hay que hacerlo así)
 
-mi_logs/
-├── mi_logs/
+pulpo/
+├── pulpo/
 │   ├── __init__.py
 │   └── otros_archivos.py
 ├── setup.py
@@ -35,20 +35,20 @@ setup(
 ## Entorno de ssh
 
 eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa_mi_logs
+ssh-add ~/.ssh/id_rsa_pulpo
 
 ## Instalacion
 
 ### Privado
-pip install git+ssh://git@github.com/peperedondorubio/mi_logs.git@main#egg=mi_logs
+pip install git+ssh://git@github.com/peperedondorubio/pulpo.git@main#egg=pulpo
 
 ### Publico
-pip install git+http://git@github.com/peperedondorubio/mi_logs.git@main#egg=mi_logs
+pip install git+http://git@github.com/peperedondorubio/pulpo.git@main#egg=pulpo
 
 
 ## y para desinstalarlo
 
-pip uninstall mi_logs
+pip uninstall pulpo
 
 ## si no funciona
 

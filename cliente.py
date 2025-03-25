@@ -1,8 +1,8 @@
 # mi_paquete/main.py
 import asyncio
 import json
-from publicador import publicador
-from consumidor import consumidor
+from publicador import pulpo.publicador
+from consumidor import pulpo.consumidor
 
 async def run():
     # Crear publicador y consumidor
