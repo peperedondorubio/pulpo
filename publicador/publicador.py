@@ -36,7 +36,7 @@ async def crear_topico(kafka_broker: str, topic_name: str, num_particiones: int 
         return True  # Se creó correctamente
     except Exception as e:
         print(f"Error al crear el tópico '{topic_name}': {e}")
-        return False  # Hubo un error
+        return False  # Error al crear
 
 class KafkaEventPublisher:
     def __init__(self):

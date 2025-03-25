@@ -14,7 +14,7 @@ class KafkaEventConsumer:
         self.consumer = None
         self.topic = topic
         self.callback = callback  # Guardamos el callback
-        self.consumer_task = None
+        self.consumer_task = None 
 
     async def start(self):
         """Inicia el consumidor de Kafka."""
