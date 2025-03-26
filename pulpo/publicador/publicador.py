@@ -44,13 +44,33 @@ class KafkaEventPublisher:
 
     async def start(self):
         """Inicia el productor de Kafka."""
-        self.producer = AIOKafkaProducer(bootstrap_servers=KAFKA_BROKER)
+        self.producer = AIOKafkaProducer(
+            bootstrap_servers=KAFKA_BROKER,
+            transactional_id="id-de-transaccion",  # Clave para Exactly-Once
+            enable_idempotence=True,  # Evita duplicados en caso de reintentos
+            acks="all"
+            )
         await self.producer.start()
 
     async def stop(self):
         """Detiene el productor de Kafka."""
         if self.producer:
             await self.producer.stop()
+
+    async def begin(self):
+        """Empieza la transacción del productor de Kafka."""
+        if self.producer:
+            await self.producer.begin_transaction()
+
+    async def commit(self):
+        """Termina transaccion del productor de Kafka."""
+        if self.producer:
+            await self.producer.commit_transaction()
+
+    async def rollback(self):
+        """Aborta la transacción el productor de Kafka."""
+        if self.producer:
+            await self.producer.abort_transaction()
 
     async def publish(self, topic: str, message: dict):
         """Publica un mensaje en un tópico específico."""
@@ -64,3 +84,9 @@ class KafkaEventPublisher:
         await self.producer.send_and_wait(topic, message_str.encode('utf-8'))
         print(f"Mensaje publicado en el tópico '{topic}': {message}")
 
+    async def publish_commit(self, topic: str, message: dict):
+        """Detiene el productor de Kafka."""
+        if self.producer:
+            await self.producer.begin_transaction()
+            await self.producer.publish(topic,message)
+            await self.producer.commit_transaction()

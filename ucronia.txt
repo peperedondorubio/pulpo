@@ -1,0 +1,95 @@
+curl -X POST http://90.161.202.110:8280/realms/vault-realm/protocol/openid-connect/token \                                       [12:19:56]
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -d "grant_type=client_credentials" \
+    -d "client_id=pepe" \
+    -d "client_secret=VowinZxLmK2xkZhVj3jM0ouVRpMXdiYk"
+
+
+echo "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyc1hLZmVZREpXSDJyZUNjYWh5UGxXc3F4OWM5UG1VTHBaQ0R3M09jSGRzIn0.eyJleHAiOjE3NDI5OTAxMzUsImlhdCI6MTc0Mjk4OTgzNSwianRpIjoiYzY0M2Y4NjQtMDIwYi00OWYxLWIwYzMtMDI3ZDU4M2JlYzk1IiwiaXNzIjoiaHR0cDovL2VzY29yaWFsOjgyODAvcmVhbG1zL3ZhdWx0LXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImJlNjJlNTdhLWY2MTgtNDNmYy1hZTQ4LTViMzI4OTRmYjRmYyIsInR5cCI6IkJlYXJlciIsImF6cCI6InBlcGUiLCJzaWQiOiIzZWE3NWVkYi0xZTE5LTQzM2ItYjRkYy1kYmU2NmQyZWU3NGYiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsImNob2NvbGF0ZXJvIiwidW1hX2F1dGhvcml6YXRpb24iLCJkZWZhdWx0LXJvbGVzLXZhdWx0LXJlYWxtIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19LCJwZXBlIjp7InJvbGVzIjpbImNob2NvbGF0ZXJvIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoicGVyaWNvIGVsIGRlbCB0b3JubyIsInByZWZlcnJlZF91c2VybmFtZSI6InBlcmljbyIsImdpdmVuX25hbWUiOiJwZXJpY28iLCJmYW1pbHlfbmFtZSI6ImVsIGRlbCB0b3JubyIsImVtYWlsIjoic3JnYmVuZWRpY3RvQGdtYWlsLmNvbSJ9.fqnhlsHLxWkw37V6THqH6ddZjlS5iAsnXySOu8TxoT9z8DczlWOKTNau6E8uepzWrPMbJGXJSIfmv0D9brdFOsB8eeG7-rKa5NwpUcN_itOF3wmg0FKtHNJvh5SBppmVKmTSO0kRJj_uUPwrXRZaE5hHQ0_bcGgAI0B_uDOM5ZKKEVEAnVRLHr2plo6ZJSePyX51AuBzo7Ua4yAcLcOv9cab9vBjmHFu5E9tugOMtq-ul3oAFwu-LomKrYcfZcU9AnyNvsbnxbTGuB6BGg0-LSigNkcyqLM_0VvzCDhzKguI__YVBHY70V4y8kX1lNDBy0cCsj11YhoK5stjy0y5Iw","expires_in":300,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJkOWY4MjdkMi1lODk1LTQyNTgtOTFiMC0yZWVkYWQ3MzU1YWQifQ.eyJleHAiOjE3NDI5OTE2MzUsImlhdCI6MTc0Mjk4OTgzNSwianRpIjoiYmQxOWVkNDMtYWVlNC00NTA0LTgyOWQtZmIyMTRmN2I2NWI1IiwiaXNzIjoiaHR0cDovL2VzY29yaWFsOjgyODAvcmVhbG1zL3ZhdWx0LXJlYWxtIiwiYXVkIjoiaHR0cDovL2VzY29yaWFsOjgyODAvcmVhbG1zL3ZhdWx0LXJlYWxtIiwic3ViIjoiYmU2MmU1N2EtZjYxOC00M2ZjLWFlNDgtNWIzMjg5NGZiNGZjIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6InBlcGUiLCJzaWQiOiIzZWE3NWVkYi0xZTE5LTQzM2ItYjRkYy1kYmU2NmQyZWU3NGYiLCJzY29wZSI6Im9wZW5pZCByb2xlcyBhY3IgYmFzaWMgc2VydmljZV9hY2NvdW50IHByb2ZpbGUgd2ViLW9yaWdpbnMgZW1haWwiLCJyZXVzZV9pZCI6IjIxODhlNDBkLTYxOGQtNDhlYi1iZGIwLWE1MjI5YjkxMGUyMCJ9.NvwZe8uENR135GLJozvmMhV9M-oqxC929gVFbQ5t4NCQ69qrDgfJmBn1B_woIihOoF_tlO8RvvcWKYMCK6ti_g","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyc1hLZmVZREpXSDJyZUNjYWh5UGxXc3F4OWM5UG1VTHBaQ0R3M09jSGRzIn0.eyJleHAiOjE3NDI5OTAxMzUsImlhdCI6MTc0Mjk4OTgzNSwianRpIjoiYzcxNGM1MTEtN2JkNS00NGNjLTgzNDEtZDhiZDA4ODgwMjkzIiwiaXNzIjoiaHR0cDovL2VzY29yaWFsOjgyODAvcmVhbG1zL3ZhdWx0LXJlYWxtIiwiYXVkIjoicGVwZSIsInN1YiI6ImJlNjJlNTdhLWY2MTgtNDNmYy1hZTQ4LTViMzI4OTRmYjRmYyIsInR5cCI6IklEIiwiYXpwIjoicGVwZSIsInNpZCI6IjNlYTc1ZWRiLTFlMTktNDMzYi1iNGRjLWRiZTY2ZDJlZTc0ZiIsImF0X2hhc2giOiJ4b1NyalNjV2xrS2l5dmFJdkNPR2d3IiwiYWNyIjoiMSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoicGVyaWNvIGVsIGRlbCB0b3JubyIsInByZWZlcnJlZF91c2VybmFtZSI6InBlcmljbyIsImdpdmVuX25hbWUiOiJwZXJpY28iLCJmYW1pbHlfbmFtZSI6ImVsIGRlbCB0b3JubyIsImVtYWlsIjoic3JnYmVuZWRpY3RvQGdtYWlsLmNvbSJ9.LUO0dXtGK5akOwJU_xnsyjqo04kR8GY8U2CiPOhGXtBAv5tl_rGShhPDcXA5E3z5XLDH69vZaiJ18NnfgPvYYniwHydvr9yJ7uWYOquxdkphHeFuzWBlcdQwnVcpiYfbenY-wCaL2J2lfi-8OET4UnsP09YwGVfpubtvphfxH2OMomJSl5l-WMLGY1Miq2t4fMX3u33ue_48lnejw9z6ze3T63Y_dChubvp6rTWaJNhdKwcz8H1nRkzKqdMj7Sn2gaHm4kh0YtgdRLc4cfBrXPFsYJChxzqYlL60WMmE0EqPXK8Gb_3b0bMdzuQh6fGlQJOWObUUVVRcv1SK90tB7g","not-before-policy":0,"session_state":"3ea75edb-1e19-433b-b4dc-dbe66d2ee74f":0,"scope" | cut -d"." -f2 | base64 -d | jq   
+
+
+
+
+pepe@feria: ~
+$ curl -X POST http://90.161.202.110:8280/realms/vault-realm/protocol/openid-connect/token \                                       [12:38:53]
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -d "grant_type=password" \
+    -d "client_id=pepe" \
+    -d "client_secret=VowinZxLmK2xkZhVj3jM0ouVRpMXdiYk" \
+    -d "username=perico" \
+    -d "password=sabbath" \
+    -d "scope=openid profile email"
+{"error":"unauthorized_client","error_description":"Client not allowed for direct access grants"}%
+
+pepe@feria: ~
+$ curl -X POST http://90.161.202.110:8280/realms/vault-realm/protocol/openid-connect/token \                                       [12:49:45]
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -d "grant_type=password" \
+    -d "client_id=pepe" \
+    -d "client_secret=VowinZxLmK2xkZhVj3jM0ouVRpMXdiYk" \
+    -d "username=perico" \
+    -d "password=sabbath" \
+    -d "scope=openid profile email"
+{"error":"invalid_grant","error_description":"Account is not fully set up"}%
+
+pepe@feria: ~
+$ curl -X POST http://90.161.202.110:8280/realms/vault-realm/protocol/openid-connect/token \                                       [12:50:00]
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -d "grant_type=password" \
+    -d "client_id=pepe" \
+    -d "client_secret=VowinZxLmK2xkZhVj3jM0ouVRpMXdiYk" \
+    -d "username=perico" \
+    -d "password=sabbath" \
+    -d "scope=openid profile email"
+{"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyc1hLZmVZREpXSDJyZUNjYWh5UGxXc3F4OWM5UG1VTHBaQ0R3M09jSGRzIn0.eyJleHAiOjE3NDI5OTAxMzUsImlhdCI6MTc0Mjk4OTgzNSwianRpIjoiYzY0M2Y4NjQtMDIwYi00OWYxLWIwYzMtMDI3ZDU4M2JlYzk1IiwiaXNzIjoiaHR0cDovL2VzY29yaWFsOjgyODAvcmVhbG1zL3ZhdWx0LXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImJlNjJlNTdhLWY2MTgtNDNmYy1hZTQ4LTViMzI4OTRmYjRmYyIsInR5cCI6IkJlYXJlciIsImF6cCI6InBlcGUiLCJzaWQiOiIzZWE3NWVkYi0xZTE5LTQzM2ItYjRkYy1kYmU2NmQyZWU3NGYiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsImNob2NvbGF0ZXJvIiwidW1hX2F1dGhvcml6YXRpb24iLCJkZWZhdWx0LXJvbGVzLXZhdWx0LXJlYWxtIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19LCJwZXBlIjp7InJvbGVzIjpbImNob2NvbGF0ZXJvIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoicGVyaWNvIGVsIGRlbCB0b3JubyIsInByZWZlcnJlZF91c2VybmFtZSI6InBlcmljbyIsImdpdmVuX25hbWUiOiJwZXJpY28iLCJmYW1pbHlfbmFtZSI6ImVsIGRlbCB0b3JubyIsImVtYWlsIjoic3JnYmVuZWRpY3RvQGdtYWlsLmNvbSJ9.fqnhlsHLxWkw37V6THqH6ddZjlS5iAsnXySOu8TxoT9z8DczlWOKTNau6E8uepzWrPMbJGXJSIfmv0D9brdFOsB8eeG7-rKa5NwpUcN_itOF3wmg0FKtHNJvh5SBppmVKmTSO0kRJj_uUPwrXRZaE5hHQ0_bcGgAI0B_uDOM5ZKKEVEAnVRLHr2plo6ZJSePyX51AuBzo7Ua4yAcLcOv9cab9vBjmHFu5E9tugOMtq-ul3oAFwu-LomKrYcfZcU9AnyNvsbnxbTGuB6BGg0-LSigNkcyqLM_0VvzCDhzKguI__YVBHY70V4y8kX1lNDBy0cCsj11YhoK5stjy0y5Iw","expires_in":300,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJkOWY4MjdkMi1lODk1LTQyNTgtOTFiMC0yZWVkYWQ3MzU1YWQifQ.eyJleHAiOjE3NDI5OTE2MzUsImlhdCI6MTc0Mjk4OTgzNSwianRpIjoiYmQxOWVkNDMtYWVlNC00NTA0LTgyOWQtZmIyMTRmN2I2NWI1IiwiaXNzIjoiaHR0cDovL2VzY29yaWFsOjgyODAvcmVhbG1zL3ZhdWx0LXJlYWxtIiwiYXVkIjoiaHR0cDovL2VzY29yaWFsOjgyODAvcmVhbG1zL3ZhdWx0LXJlYWxtIiwic3ViIjoiYmU2MmU1N2EtZjYxOC00M2ZjLWFlNDgtNWIzMjg5NGZiNGZjIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6InBlcGUiLCJzaWQiOiIzZWE3NWVkYi0xZTE5LTQzM2ItYjRkYy1kYmU2NmQyZWU3NGYiLCJzY29wZSI6Im9wZW5pZCByb2xlcyBhY3IgYmFzaWMgc2VydmljZV9hY2NvdW50IHByb2ZpbGUgd2ViLW9yaWdpbnMgZW1haWwiLCJyZXVzZV9pZCI6IjIxODhlNDBkLTYxOGQtNDhlYi1iZGIwLWE1MjI5YjkxMGUyMCJ9.NvwZe8uENR135GLJozvmMhV9M-oqxC929gVFbQ5t4NCQ69qrDgfJmBn1B_woIihOoF_tlO8RvvcWKYMCK6ti_g","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyc1hLZmVZREpXSDJyZUNjYWh5UGxXc3F4OWM5UG1VTHBaQ0R3M09jSGRzIn0.eyJleHAiOjE3NDI5OTAxMzUsImlhdCI6MTc0Mjk4OTgzNSwianRpIjoiYzcxNGM1MTEtN2JkNS00NGNjLTgzNDEtZDhiZDA4ODgwMjkzIiwiaXNzIjoiaHR0cDovL2VzY29yaWFsOjgyODAvcmVhbG1zL3ZhdWx0LXJlYWxtIiwiYXVkIjoicGVwZSIsInN1YiI6ImJlNjJlNTdhLWY2MTgtNDNmYy1hZTQ4LTViMzI4OTRmYjRmYyIsInR5cCI6IklEIiwiYXpwIjoicGVwZSIsInNpZCI6IjNlYTc1ZWRiLTFlMTktNDMzYi1iNGRjLWRiZTY2ZDJlZTc0ZiIsImF0X2hhc2giOiJ4b1NyalNjV2xrS2l5dmFJdkNPR2d3IiwiYWNyIjoiMSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoicGVyaWNvIGVsIGRlbCB0b3JubyIsInByZWZlcnJlZF91c2VybmFtZSI6InBlcmljbyIsImdpdmVuX25hbWUiOiJwZXJpY28iLCJmYW1pbHlfbmFtZSI6ImVsIGRlbCB0b3JubyIsImVtYWlsIjoic3JnYmVuZWRpY3RvQGdtYWlsLmNvbSJ9.LUO0dXtGK5akOwJU_xnsyjqo04kR8GY8U2CiPOhGXtBAv5tl_rGShhPDcXA5E3z5XLDH69vZaiJ18NnfgPvYYniwHydvr9yJ7uWYOquxdkphHeFuzWBlcdQwnVcpiYfbenY-wCaL2J2lfi-8OET4UnsP09YwGVfpubtvphfxH2OMomJSl5l-WMLGY1Miq2t4fMX3u33ue_48lnejw9z6ze3T63Y_dChubvp6rTWaJNhdKwcz8H1nRkzKqdMj7Sn2gaHm4kh0YtgdRLc4cfBrXPFsYJChxzqYlL60WMmE0EqPXK8Gb_3b0bMdzuQh6fGlQJOWObUUVVRcv1SK90tB7g","not-before-policy":0,"session_state":"3ea75edb-1e19-433b-b4dc-dbe66d2ee74f","scope":"openid profile email"}%
+
+pepe@feria: ~
+$ echo "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyc1hLZmVZREpXSDJyZUNjYWh5UGxXc3F4OWM5UG1VTHBaQ0R3M09jSGRzIn0.eyJleHAiOjE3NDI5ODg4NjUsImlhdCI6MTc0Mjk4ODU2NSwianRpIjoiYTBmODJkNDktNDZhZC00ODE4LWI2YjktYTNjMDg2OGU5ZTY3IiwiaXNzIjoiaHR0cDovL2VzY29yaWFsOjgyODAvcmVhbG1zL3ZhdWx0LXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjVhNWQ1MGQxLWQ0ODUtNGJlOC04ZDRlLTYzN2YzMjg3NWM1MCIsInR5cCI6IkJlYXJlciIsImF6cCI6InBlcGUiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy12YXVsdC1yZWFsbSJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImNsaWVudEhvc3QiOiIxNzIuMjUuMC4xIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtcGVwZSIsImNsaWVudEFkZHJlc3MiOiIxNzIuMjUuMC4xIiwiY2xpZW50X2lkIjoicGVwZSJ9.EjbPXj2qd7JpAWYE2XltBW6SlHwrzbh5K93xYLFvnBCuqmr5uJIlO1OHZQnR9UnEu49zYDPIB--l0NfFaMmfe4L-o21-N682YuCiQ3Kcn8t07NDryU0xFv2puEka9eF1StzooEpfbtkja0pF6e1_gfEU-NIyRb0L8Hze0cEz6HMvdtA7ydkzBtIL6KmV7pROq_68jqFv6HtjDXBkVj_g5_quk3dZTGpVnNPN9TA_gNIhwMf15GGhybwdeAE35jc2Aqmbq3Q3N-j8JVC63k0xyWXlwwxTBRMraDGE1tG5liXKLvkHnrPYiw6gv1nxPmBXtVyM7WBz__97gFUNTje9IQ":0,"scope" | cut -d"." -f2 | base64 -d | jq
+FAIL: 130
+
+pepe@feria: ~
+$ echo "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyc1hLZmVZREpXSDJyZUNjYWh5UGxXc3F4OWM5UG1VTHBaQ0R3M09jSGRzIn0.eyJleHAiOjE3NDI5OTAxMzUsImlhdCI6MTc0Mjk4OTgzNSwianRpIjoiYzY0M2Y4NjQtMDIwYi00OWYxLWIwYzMtMDI3ZDU4M2JlYzk1IiwiaXNzIjoiaHR0cDovL2VzY29yaWFsOjgyODAvcmVhbG1zL3ZhdWx0LXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImJlNjJlNTdhLWY2MTgtNDNmYy1hZTQ4LTViMzI4OTRmYjRmYyIsInR5cCI6IkJlYXJlciIsImF6cCI6InBlcGUiLCJzaWQiOiIzZWE3NWVkYi0xZTE5LTQzM2ItYjRkYy1kYmU2NmQyZWU3NGYiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsImNob2NvbGF0ZXJvIiwidW1hX2F1dGhvcml6YXRpb24iLCJkZWZhdWx0LXJvbGVzLXZhdWx0LXJlYWxtIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19LCJwZXBlIjp7InJvbGVzIjpbImNob2NvbGF0ZXJvIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoicGVyaWNvIGVsIGRlbCB0b3JubyIsInByZWZlcnJlZF91c2VybmFtZSI6InBlcmljbyIsImdpdmVuX25hbWUiOiJwZXJpY28iLCJmYW1pbHlfbmFtZSI6ImVsIGRlbCB0b3JubyIsImVtYWlsIjoic3JnYmVuZWRpY3RvQGdtYWlsLmNvbSJ9.fqnhlsHLxWkw37V6THqH6ddZjlS5iAsnXySOu8TxoT9z8DczlWOKTNau6E8uepzWrPMbJGXJSIfmv0D9brdFOsB8eeG7-rKa5NwpUcN_itOF3wmg0FKtHNJvh5SBppmVKmTSO0kRJj_uUPwrXRZaE5hHQ0_bcGgAI0B_uDOM5ZKKEVEAnVRLHr2plo6ZJSePyX51AuBzo7Ua4yAcLcOv9cab9vBjmHFu5E9tugOMtq-ul3oAFwu-LomKrYcfZcU9AnyNvsbnxbTGuB6BGg0-LSigNkcyqLM_0VvzCDhzKguI__YVBHY70V4y8kX1lNDBy0cCsj11YhoK5stjy0y5Iw","expires_in":300,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJkOWY4MjdkMi1lODk1LTQyNTgtOTFiMC0yZWVkYWQ3MzU1YWQifQ.eyJleHAiOjE3NDI5OTE2MzUsImlhdCI6MTc0Mjk4OTgzNSwianRpIjoiYmQxOWVkNDMtYWVlNC00NTA0LTgyOWQtZmIyMTRmN2I2NWI1IiwiaXNzIjoiaHR0cDovL2VzY29yaWFsOjgyODAvcmVhbG1zL3ZhdWx0LXJlYWxtIiwiYXVkIjoiaHR0cDovL2VzY29yaWFsOjgyODAvcmVhbG1zL3ZhdWx0LXJlYWxtIiwic3ViIjoiYmU2MmU1N2EtZjYxOC00M2ZjLWFlNDgtNWIzMjg5NGZiNGZjIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6InBlcGUiLCJzaWQiOiIzZWE3NWVkYi0xZTE5LTQzM2ItYjRkYy1kYmU2NmQyZWU3NGYiLCJzY29wZSI6Im9wZW5pZCByb2xlcyBhY3IgYmFzaWMgc2VydmljZV9hY2NvdW50IHByb2ZpbGUgd2ViLW9yaWdpbnMgZW1haWwiLCJyZXVzZV9pZCI6IjIxODhlNDBkLTYxOGQtNDhlYi1iZGIwLWE1MjI5YjkxMGUyMCJ9.NvwZe8uENR135GLJozvmMhV9M-oqxC929gVFbQ5t4NCQ69qrDgfJmBn1B_woIihOoF_tlO8RvvcWKYMCK6ti_g","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIyc1hLZmVZREpXSDJyZUNjYWh5UGxXc3F4OWM5UG1VTHBaQ0R3M09jSGRzIn0.eyJleHAiOjE3NDI5OTAxMzUsImlhdCI6MTc0Mjk4OTgzNSwianRpIjoiYzcxNGM1MTEtN2JkNS00NGNjLTgzNDEtZDhiZDA4ODgwMjkzIiwiaXNzIjoiaHR0cDovL2VzY29yaWFsOjgyODAvcmVhbG1zL3ZhdWx0LXJlYWxtIiwiYXVkIjoicGVwZSIsInN1YiI6ImJlNjJlNTdhLWY2MTgtNDNmYy1hZTQ4LTViMzI4OTRmYjRmYyIsInR5cCI6IklEIiwiYXpwIjoicGVwZSIsInNpZCI6IjNlYTc1ZWRiLTFlMTktNDMzYi1iNGRjLWRiZTY2ZDJlZTc0ZiIsImF0X2hhc2giOiJ4b1NyalNjV2xrS2l5dmFJdkNPR2d3IiwiYWNyIjoiMSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoicGVyaWNvIGVsIGRlbCB0b3JubyIsInByZWZlcnJlZF91c2VybmFtZSI6InBlcmljbyIsImdpdmVuX25hbWUiOiJwZXJpY28iLCJmYW1pbHlfbmFtZSI6ImVsIGRlbCB0b3JubyIsImVtYWlsIjoic3JnYmVuZWRpY3RvQGdtYWlsLmNvbSJ9.LUO0dXtGK5akOwJU_xnsyjqo04kR8GY8U2CiPOhGXtBAv5tl_rGShhPDcXA5E3z5XLDH69vZaiJ18NnfgPvYYniwHydvr9yJ7uWYOquxdkphHeFuzWBlcdQwnVcpiYfbenY-wCaL2J2lfi-8OET4UnsP09YwGVfpubtvphfxH2OMomJSl5l-WMLGY1Miq2t4fMX3u33ue_48lnejw9z6ze3T63Y_dChubvp6rTWaJNhdKwcz8H1nRkzKqdMj7Sn2gaHm4kh0YtgdRLc4cfBrXPFsYJChxzqYlL60WMmE0EqPXK8Gb_3b0bMdzuQh6fGlQJOWObUUVVRcv1SK90tB7g","not-before-policy":0,"session_state":"3ea75edb-1e19-433b-b4dc-dbe66d2ee74f":0,"scope" | cut -d"." -f2 | base64 -d | jq
+{
+  "exp": 1742990135,
+  "iat": 1742989835,
+  "jti": "c643f864-020b-49f1-b0c3-027d583bec95",
+  "iss": "http://escorial:8280/realms/vault-realm",
+  "aud": "account",
+  "sub": "be62e57a-f618-43fc-ae48-5b32894fb4fc",
+  "typ": "Bearer",
+  "azp": "pepe",
+  "sid": "3ea75edb-1e19-433b-b4dc-dbe66d2ee74f",
+  "acr": "1",
+  "allowed-origins": [
+    "/*"
+  ],
+  "realm_access": {
+    "roles": [
+      "offline_access",
+      "chocolatero",
+      "uma_authorization",
+      "default-roles-vault-realm"
+    ]
+  },
+  "resource_access": {
+    "account": {
+      "roles": [
+        "manage-account",
+        "manage-account-links",
+        "view-profile"
+      ]
+    },
+    "pepe": {
+      "roles": [
+        "chocolatero"
+      ]
+    }
+  },
+  "scope": "openid profile email",
+  "email_verified": true,
+  "name": "perico el del torno",
+  "preferred_username": "perico",
+  "given_name": "perico",
+  "family_name": "el del torno",
+  "email": "srgbenedicto@gmail.com"
+}
