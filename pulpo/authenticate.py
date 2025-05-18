@@ -59,11 +59,6 @@ class Auth:
             raise Exception(f"Error al decodificar el token: {str(e)}")
   
 
-    def set_otp(self, otp):
-        
-        self.otp = otp
-
-
     def validate_token(self, token):
 
         try:
