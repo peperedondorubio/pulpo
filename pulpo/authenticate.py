@@ -108,5 +108,4 @@ class Auth:
                 "decoded_token": self.decoded_token
             }
         else:
-            raise RuntimeError(f" Error  {response.status_code}: {response.text}")
-
+            raise RuntimeError(f"❌ Error {response.status_code}: {response.text}")
