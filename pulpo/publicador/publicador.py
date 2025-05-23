@@ -46,7 +46,7 @@ class KafkaEventPublisher:
         """Inicia el productor de Kafka."""
         self.producer = AIOKafkaProducer(
             bootstrap_servers=broker,
-            transactional_id="id-de-transaccion",  # Clave para Exactly-Once
+            #transactional_id="id-de-transaccion",  # Clave para Exactly-Once
             enable_idempotence=True,  # Evita duplicados en caso de reintentos
             acks="all"
             )
