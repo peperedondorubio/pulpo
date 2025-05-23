@@ -2,7 +2,7 @@
 from aiokafka import AIOKafkaConsumer
 import asyncio
 
-KAFKA_BROKER = 'escorial:29092'
+KAFKA_BROKER = 'alcazar:29092'
 
 class KafkaEventConsumer:
     def __init__(self, topic: str, callback: callable, id_grupo: str = "global"):
@@ -17,11 +17,11 @@ class KafkaEventConsumer:
         self.consumer_task = None 
         self.id_grupo = id_grupo
 
-    async def start(self):
+    async def start(self, broker = KAFKA_BROKER):
         """Inicia el consumidor de Kafka."""
         self.consumer = AIOKafkaConsumer(
             self.topic,
-            bootstrap_servers=KAFKA_BROKER,
+            bootstrap_servers=broker,
             group_id=self.id_grupo,
             enable_auto_commit=False,
             session_timeout_ms=60000,  # 🔹 Aumenta el tiempo de espera (60 segundos)

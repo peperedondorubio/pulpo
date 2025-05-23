@@ -3,7 +3,7 @@ from confluent_kafka.admin import AdminClient, NewTopic
 import json
 import asyncio
 
-KAFKA_BROKER = 'escorial:29092'
+KAFKA_BROKER = 'alcazar:29092'
 
 async def crear_topico(kafka_broker: str, topic_name: str, num_particiones: int = 1, replication_factor: int = 1) -> bool:
     """
@@ -42,10 +42,10 @@ class KafkaEventPublisher:
     def __init__(self):
         self.producer = None
 
-    async def start(self):
+    async def start(self, broker: str = KAFKA_BROKER):
         """Inicia el productor de Kafka."""
         self.producer = AIOKafkaProducer(
-            bootstrap_servers=KAFKA_BROKER,
+            bootstrap_servers=broker,
             transactional_id="id-de-transaccion",  # Clave para Exactly-Once
             enable_idempotence=True,  # Evita duplicados en caso de reintentos
             acks="all"
