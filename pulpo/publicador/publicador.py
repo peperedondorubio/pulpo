@@ -2,8 +2,9 @@ from aiokafka import AIOKafkaProducer
 from confluent_kafka.admin import AdminClient, NewTopic
 import json
 import asyncio
+import os
 
-KAFKA_BROKER = 'alcazar:29092'
+KAFKA_BROKER = os.getenv("KAFKA_BROKER", "alcazar:29092")
 
 async def crear_topico(kafka_broker: str, topic_name: str, num_particiones: int = 1, replication_factor: int = 1) -> bool:
     """

@@ -1,8 +1,9 @@
 # mi_paquete/consumer.py
 from aiokafka import AIOKafkaConsumer
 import asyncio
+import os
 
-KAFKA_BROKER = 'alcazar:29092'
+KAFKA_BROKER = os.getenv("KAFKA_BROKER", "alcazar:29092")
 
 class KafkaEventConsumer:
     def __init__(self, topic: str, callback: callable, id_grupo: str = "global"):
