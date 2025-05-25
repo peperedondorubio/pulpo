@@ -26,7 +26,7 @@ class KafkaEventConsumer:
             group_id=self.id_grupo,
             enable_auto_commit=False,
             session_timeout_ms=600000,  # 🔹 Aumenta el tiempo de espera (10 minutos)
-            heartbeat_interval_ms=200000,  # 🔹 Envía heartbeats cada 15 segundos
+            heartbeat_interval_ms=200000,  # 🔹 Envía heartbeat
             max_poll_interval_ms=3000000, # Tiempo máximo para procesar mensajes ( 50m)
             isolation_level="read_committed"  # Ignora mensajes no confirmados
         )
