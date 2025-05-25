@@ -22,13 +22,17 @@ class KafkaEventConsumer:
         """Inicia el consumidor de Kafka."""
         self.consumer = AIOKafkaConsumer(
             self.topic,
-            bootstrap_servers=broker,
+            bootstrap_servers=broker,  # Asegúrate de que sea IP/host accesible desde el contenedor
             group_id=self.id_grupo,
             enable_auto_commit=False,
-            session_timeout_ms=600000,  # 🔹 Aumenta el tiempo de espera (10 minutos)
-            heartbeat_interval_ms=200000,  # 🔹 Envía heartbeat
-            max_poll_interval_ms=3000000, # Tiempo máximo para procesar mensajes ( 50m)
-            isolation_level="read_committed"  # Ignora mensajes no confirmados
+            # 🔹 Timeouts ajustados para entornos inestables:
+            session_timeout_ms=30000,           # 30 segundos (default: 10s)
+            heartbeat_interval_ms=10000,        # 10 segundos (default: 3s)
+            max_poll_interval_ms=300000,        # 5 minutos (default: 5m)
+            request_timeout_ms=40000,           # 40 segundos (default: 40s)
+            retry_backoff_ms=2000,              # 2 segundos entre reintentos (default: 100ms)
+            auto_offset_reset="earliest",       # Lee desde el inicio si no hay offset
+            isolation_level="read_committed"
         )
 
         await self.consumer.start()
