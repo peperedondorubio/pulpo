@@ -39,6 +39,8 @@ ssh-add ~/.ssh/id_rsa_pulpo
 
 ## Instalacion
 
+Commit del pulpo en github
+
 ### Privado
 pip install git+ssh://git@github.com/peperedondorubio/pulpo.git@main#egg=pulpo
 
