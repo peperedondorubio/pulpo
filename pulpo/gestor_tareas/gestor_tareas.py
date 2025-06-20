@@ -6,15 +6,14 @@ import os
 import sys
 from pathlib import Path
 
+
 # Añadir el directorio raíz del proyecto al path de Python
 project_root = Path(__file__).parent.parent  # Sube dos niveles desde taskmanager.py
 sys.path.append(str(project_root))
 
 from consumidor.consumidor import KafkaEventConsumer
-from ..publicador.publicador import KafkaEventPublisher
+from publicador.publicador import KafkaEventPublisher
 
-
-KAFKA_BROKER = os.getenv("KAFKA_BROKER", "alcazar:29092")
 ARANGO_HOST = os.getenv("ARANGO_HOST", "http://alcazar:8529")
 ARANGO_DB = os.getenv("ARANGO_DB", "compai_db")
 ARANGO_USER = os.getenv("ARANGO_USER", "root")
@@ -22,16 +21,17 @@ ARANGO_PASSWORD = os.getenv("ARANGO_PASSWORD", "sabbath")
 ARANGO_COLLECTION = os.getenv("ARANGO_COLLECTION", "tareas")
 
 # Tópicos
-SUBJECT_TAREA = os.getenv("SUBJECT_TAREA", "compai_tarea")
-SUBJECT_FIN_TAREA = os.getenv("SUBJECT_FIN_TAREA", "compai_fin_tarea")
-SUBJECT_FIN_TRABAJO = os.getenv("SUBJECT_FIN_TRABAJO", "compai_fin_trabajo")
+TOPIC_JOB = os.getenv("TOPIC_JOB", "job.start")
+TOPIC_TASK = os.getenv("TOPIC_TASK", "job.task.start")
+TOPIC_END_TASK = os.getenv("TOPIC_END_TASK", "job.task.end")
+TOPIC_END_JOB = os.getenv("TOPIC_END_JOB", "job.end")
 
 
 class GestorTareas:
     def __init__(
         self,
-        topic_finalizacion_tareas: str = SUBJECT_FIN_TAREA,
-        topic_finalizacion_global: str = SUBJECT_FIN_TRABAJO,
+        topic_finalizacion_tareas: str = TOPIC_END_TASK,
+        topic_finalizacion_global: str = TOPIC_END_JOB,
         on_complete_callback=None,
         on_all_complete_callback=None,
     ):
@@ -42,9 +42,8 @@ class GestorTareas:
         self.db = self.client.db(ARANGO_DB, username=ARANGO_USER, password=ARANGO_PASSWORD)
         self.collection = self.db.collection(ARANGO_COLLECTION)
 
-        self.producer = KafkaEventPublisher(bootstrap_servers=KAFKA_BROKER)
+        self.producer = KafkaEventPublisher()
 
-        # 🔸 Nuevo consumidor con callback
         self.consumer = KafkaEventConsumer(
             topic=self.topic_finalizacion_tareas,
             callback=self._on_kafka_message,
@@ -65,14 +64,16 @@ class GestorTareas:
     async def add_job(self, job_id: str = None, task_ids: list[str] = []):
         if job_id is None:
             job_id = str(uuid.uuid4())
+
         doc = {
             "_key": job_id,
             "tasks": {task_id: False for task_id in task_ids}
         }
+
         if not self.collection.has(job_id):
             self.collection.insert(doc)
         else:
-            self.collection.update(doc)
+            self.collection.update_match({"_key": job_id}, doc)
 
         print(f"Job '{job_id}' creado con tareas: {task_ids}")
 
@@ -82,11 +83,13 @@ class GestorTareas:
                 "task_id": task_id,
                 "action": "start_task"
             }
-            await self.producer.send_and_wait(SUBJECT_TAREA, json.dumps(msg).encode("utf-8"))
-            print(f"Mensaje publicado para iniciar tarea '{task_id}' del job '{job_id}'")
+            asyncio.create_task(self._publicar_tarea(msg))
 
         return job_id
-    
+
+    async def _publicar_tarea(self, msg: dict):
+        await self.producer.publish(TOPIC_TASK, msg)
+
     async def _on_kafka_message(self, message):
         try:
             data = json.loads(message.value.decode("utf-8"))
@@ -133,12 +136,11 @@ class GestorTareas:
                     await self.on_all_complete_callback()
 
     def _all_jobs_completed(self) -> bool:
-        cursor = self.collection.find()
+        cursor = self.collection.find({})
         for job in cursor:
             if not all(job["tasks"].values()):
                 return False
         return True
-
 
 
 ##############################################################
@@ -172,7 +174,7 @@ async def main():
     # Crear el job y obtener el job_id generado
     task_ids = [f"task-{i}" for i in range(3)]
     job_id = await monitor.add_job(task_ids=task_ids)
-# ...existing code...
+    # ...existing code...
 
     # Simular finalización de tareas
     for task_id in task_ids:
