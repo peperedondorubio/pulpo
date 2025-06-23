@@ -7,7 +7,7 @@ confluent-kafka==2.8.2
 cryptography==44.0.2
 idna==3.10
 packaging==24.2
-pulpo @ git+http://git@github.com/peperedondorubio/pulpo.git@3610584cc49c338fa8e6c5ecae26536c94d65dd1
+#pulpo @ git+http://git@github.com/peperedondorubio/pulpo.git@3610584cc49c338fa8e6c5ecae26536c94d65dd1
 pycparser==2.22
 PyJWT==2.10.1
 requests==2.32.3
