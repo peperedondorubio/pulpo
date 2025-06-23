@@ -7,7 +7,6 @@ setup(
     install_requires=[
         "requests", 
         "pyjwt",
-        "ArangoClient",
         "aiokafka",
         "Path"
     ],
