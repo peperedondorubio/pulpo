@@ -1,8 +1,15 @@
 import asyncio
 import json
 import os
-from publicador import KafkaEventPublisher
-from consumidor import KafkaEventConsumer
+import sys
+from pathlib import Path
+
+# Añadir el directorio raíz del proyecto al path de Python
+project_root = Path(__file__).parent.parent  # Sube dos niveles desde taskmanager.py
+sys.path.append(str(project_root))
+
+from consumidor.consumidor import KafkaEventConsumer
+from publicador.publicador import KafkaEventPublisher
 
 KAFKA_BROKER = os.getenv("KAFKA_BROKER", "alcazar:29092")
 SUBJECT_TAREA = os.getenv("SUBJECT_TAREA", "compai_tarea")
