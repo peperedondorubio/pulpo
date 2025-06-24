@@ -13,9 +13,6 @@ sys.path.append(str(project_root))
 from consumidor.consumidor import KafkaEventConsumer
 from publicador.publicador import KafkaEventPublisher
 
-from score_eval import ScoreEvaluator
-from proxy_orquestator_flow import create_card, complete_task, webhook_task_update
-
 ARANGO_HOST = os.getenv("ARANGO_HOST", "http://alcazar:8529")
 ARANGO_DB = os.getenv("ARANGO_DB", "compai_db")
 ARANGO_USER = os.getenv("ARANGO_USER", "root")
@@ -35,7 +32,11 @@ class GestorTareas:
         on_complete_callback=None,
         on_all_complete_callback=None,
         on_task_complete_callback=None,
+        id_grupo="job_monitor_group"
     ):
+        # si no hay callbacks definidos, NO creo un consumer 
+        self.crear_consumer =  on_complete_callback or on_all_complete_callback or on_task_complete_callback
+
         self.topic_finalizacion_tareas = topic_finalizacion_tareas
         self.topic_finalizacion_global = topic_finalizacion_global
 
@@ -43,12 +44,14 @@ class GestorTareas:
         self.db = self.client.db(ARANGO_DB, username=ARANGO_USER, password=ARANGO_PASSWORD)
         self.collection = self.db.collection(ARANGO_COLLECTION)
 
+        self.consumer = None
         self.producer = KafkaEventPublisher()
-        self.consumer = KafkaEventConsumer(
-            topic=self.topic_finalizacion_tareas,
-            callback=self._on_kafka_message,
-            id_grupo="job_monitor_group"
-        )
+        if self.crear_consumer: 
+            self.consumer = KafkaEventConsumer(
+                topic=self.topic_finalizacion_tareas,
+                callback=self._on_kafka_message,
+                id_grupo=id_grupo
+            )
 
         self.on_complete_callback = on_complete_callback
         self.on_all_complete_callback = on_all_complete_callback
@@ -56,10 +59,12 @@ class GestorTareas:
 
     async def start(self):
         await self.producer.start()
-        await self.consumer.start()
+        if self.crear_consumer:
+            await self.consumer.start()
 
     async def stop(self):
-        await self.consumer.stop()
+        if self.crear_consumer:
+            await self.consumer.stop()
         await self.producer.stop()
 
     async def add_job(self, tasks: list[dict], job_id: str = None):
