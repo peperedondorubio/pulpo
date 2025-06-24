@@ -13,6 +13,9 @@ sys.path.append(str(project_root))
 from consumidor.consumidor import KafkaEventConsumer
 from publicador.publicador import KafkaEventPublisher
 
+from score_eval import ScoreEvaluator
+from proxy_orquestator_flow import create_card, complete_task, webhook_task_update
+
 ARANGO_HOST = os.getenv("ARANGO_HOST", "http://alcazar:8529")
 ARANGO_DB = os.getenv("ARANGO_DB", "compai_db")
 ARANGO_USER = os.getenv("ARANGO_USER", "root")
@@ -94,6 +97,16 @@ class GestorTareas:
         await asyncio.gather(*tasks_msgs)
 
         return job_id
+
+    def update_task(self, job_id: str, task_id: str, updates: dict):
+        job = self.collection.get(job_id)
+        if not job or task_id not in job["tasks"]:
+            print(f"[!] No se encontró la tarea '{task_id}' en el job '{job_id}'")
+            return False
+        job["tasks"][task_id].update(updates)
+        self.collection.update(job)
+        print(f"[✔] Tarea '{task_id}' del job '{job_id}' actualizada con {updates}")
+        return True
 
     async def _publicar_tarea(self, msg: dict):
         await self.producer.publish(TOPIC_TASK, msg)
