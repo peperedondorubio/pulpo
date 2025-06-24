@@ -248,5 +248,17 @@ async def main():
     except KeyboardInterrupt:
         await monitor.stop()
 
+async def main2():
+    monitor = GestorTareas()
+    await monitor.start()
+    devolucion = monitor.get_task_field("c37565d2-f436-46fd-a7a7-508e1b72f379","tarea_prueba1", "card_id")
+    print(devolucion)
+    await monitor.stop()
+
+
 if __name__ == "__main__":
-    asyncio.run(main())
+    
+    asyncio.run(main2())
+
+
+    
