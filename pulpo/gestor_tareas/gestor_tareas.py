@@ -4,11 +4,10 @@ import uuid
 from arango import ArangoClient
 import os
 import sys
-from pathlib import Path
-
+from pathlib import Path 
 
 # Añadir el directorio raíz del proyecto al path de Python
-project_root = Path(__file__).parent.parent  # Sube dos niveles desde taskmanager.py
+project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
 
 from consumidor.consumidor import KafkaEventConsumer
@@ -20,12 +19,10 @@ ARANGO_USER = os.getenv("ARANGO_USER", "root")
 ARANGO_PASSWORD = os.getenv("ARANGO_PASSWORD", "sabbath")
 ARANGO_COLLECTION = os.getenv("ARANGO_COLLECTION", "tareas")
 
-# Tópicos
-TOPIC_JOB = os.getenv("TOPIC_JOB", "job.start")
 TOPIC_TASK = os.getenv("TOPIC_TASK", "job.task.start")
-TOPIC_END_TASK = os.getenv("TOPIC_END_TASK", "job.task.end")
-TOPIC_END_JOB = os.getenv("TOPIC_END_JOB", "job.end")
-
+TOPIC_END_TASK = os.getenv("TOPIC_END_TASK", "job.task.completed")
+TOPIC_END_JOB = os.getenv("TOPIC_END_JOB", "job.completed")
+TOPIC_END_JOBS = os.getenv("TOPIC_END_JOBS", "jobs.all.completed")
 
 class GestorTareas:
     def __init__(
@@ -34,6 +31,7 @@ class GestorTareas:
         topic_finalizacion_global: str = TOPIC_END_JOB,
         on_complete_callback=None,
         on_all_complete_callback=None,
+        on_task_complete_callback=None,
     ):
         self.topic_finalizacion_tareas = topic_finalizacion_tareas
         self.topic_finalizacion_global = topic_finalizacion_global
@@ -43,7 +41,6 @@ class GestorTareas:
         self.collection = self.db.collection(ARANGO_COLLECTION)
 
         self.producer = KafkaEventPublisher()
-
         self.consumer = KafkaEventConsumer(
             topic=self.topic_finalizacion_tareas,
             callback=self._on_kafka_message,
@@ -52,6 +49,7 @@ class GestorTareas:
 
         self.on_complete_callback = on_complete_callback
         self.on_all_complete_callback = on_all_complete_callback
+        self.on_task_complete_callback = on_task_complete_callback
 
     async def start(self):
         await self.producer.start()
@@ -73,17 +71,19 @@ class GestorTareas:
         if not self.collection.has(job_id):
             self.collection.insert(doc)
         else:
-            self.collection.update_match({"_key": job_id}, doc)
+            self.collection.update(doc)
 
         print(f"Job '{job_id}' creado con tareas: {task_ids}")
 
+        tasks = []
         for task_id in task_ids:
             msg = {
                 "job_id": job_id,
                 "task_id": task_id,
                 "action": "start_task"
             }
-            asyncio.create_task(self._publicar_tarea(msg))
+            tasks.append(self._publicar_tarea(msg))
+        await asyncio.gather(*tasks)
 
         return job_id
 
@@ -118,17 +118,29 @@ class GestorTareas:
         self.collection.update(job)
         print(f"[✔] Tarea '{task_id}' completada en job '{job_id}'")
 
+        # ✅ Publicar evento de finalización de tarea
+        await self.producer.publish(TOPIC_END_TASK, {
+            "job_id": job_id,
+            "task_id": task_id,
+            "status": "completed",
+            "uuid": str(uuid.uuid4())
+        })
+
+        # ✅ Callback opcional
+        if self.on_task_complete_callback:
+            await self.on_task_complete_callback(job_id, task_id)
+
+        # Si todas las tareas del job están completas
         if all(job["tasks"].values()):
             print(f"[🎉] Job '{job_id}' completado")
             if self.on_complete_callback:
                 await self.on_complete_callback(job_id)
 
-            msg = {
+            await self.producer.publish(self.topic_finalizacion_global, {
                 "job_id": job_id,
                 "status": "completed",
                 "uuid": str(uuid.uuid4())
-            }
-            await self.producer.publish(self.topic_finalizacion_global, msg)
+            })
 
             if self._all_jobs_completed():
                 print("[🎉] Todos los jobs completados")
@@ -143,38 +155,35 @@ class GestorTareas:
         return True
 
 
-##############################################################
-# Ejemplo callbacks para pruebas
+########################################
+# Para pruebas y demostración
+
+
+# Callbacks de pruebas
+
+async def on_task_complete(job_id, task_id):
+    print(f"🔹🔹🔹🔹🔹🔹🔹🔹 Callback: Tarea {task_id} del job {job_id} completada.")
 
 async def on_job_complete(job_id):
-    print(f"Callback: Job {job_id} completado.")
-    publisher = KafkaEventPublisher()
-    await publisher.start()
-    await publisher.publish("jobs.complete", {"job_id": job_id, "status": "completed"})
-    await publisher.stop()
+    print(f"✅✅✅✅✅✅✅✅ Callback: Job {job_id} completado.")
 
 async def on_all_jobs_complete():
-    print("Callback: Todos los jobs completados.")
-    publisher = KafkaEventPublisher()
-    await publisher.start()
-    await publisher.publish("jobs.global", {"status": "all_jobs_completed"})
-    await publisher.stop()
-
+    print("🌍🌍🌍🌍🌍🌍🌍🌍 Callback: Todos los jobs completados.")
+   
 
 # Ejemplo de uso
 async def main():
     monitor = GestorTareas(
         on_complete_callback=on_job_complete,
         on_all_complete_callback=on_all_jobs_complete,
+        on_task_complete_callback=on_task_complete  
     )
 
     await monitor.start()
 
-    # ...existing code...
     # Crear el job y obtener el job_id generado
     task_ids = [f"task-{i}" for i in range(3)]
     job_id = await monitor.add_job(task_ids=task_ids)
-    # ...existing code...
 
     # Simular finalización de tareas
     for task_id in task_ids:
@@ -187,6 +196,6 @@ async def main():
     except KeyboardInterrupt:
         await monitor.stop()
 
-
 if __name__ == "__main__":
     asyncio.run(main())
+
