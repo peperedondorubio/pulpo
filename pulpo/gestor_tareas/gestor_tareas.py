@@ -59,13 +59,20 @@ class GestorTareas:
         await self.consumer.stop()
         await self.producer.stop()
 
-    async def add_job(self, job_id: str = None, task_ids: list[str] = []):
+    async def add_job(self, tasks: list[dict], job_id: str = None):
         if job_id is None:
             job_id = str(uuid.uuid4())
 
+        # Construir el diccionario de tareas
         doc = {
             "_key": job_id,
-            "tasks": {task_id: False for task_id in task_ids}
+            "tasks": {
+                task["task_id"]: {
+                    **{k: v for k, v in task.items() if k != "task_id"},
+                    "completed": False  # Campo fijo siempre presente
+                }
+                for task in tasks
+            }
         }
 
         if not self.collection.has(job_id):
@@ -73,17 +80,18 @@ class GestorTareas:
         else:
             self.collection.update(doc)
 
-        print(f"Job '{job_id}' creado con tareas: {task_ids}")
+        print(f"Job '{job_id}' creado con tareas: {[task['task_id'] for task in tasks]}")
 
-        tasks = []
-        for task_id in task_ids:
+        # Publicar inicio de tareas
+        tasks_msgs = []
+        for task in tasks:
             msg = {
                 "job_id": job_id,
-                "task_id": task_id,
+                "task_id": task["task_id"],
                 "action": "start_task"
             }
-            tasks.append(self._publicar_tarea(msg))
-        await asyncio.gather(*tasks)
+            tasks_msgs.append(self._publicar_tarea(msg))
+        await asyncio.gather(*tasks_msgs)
 
         return job_id
 
@@ -110,11 +118,11 @@ class GestorTareas:
             print(f"[!] Tarea '{task_id}' no pertenece al job '{job_id}'")
             return
 
-        if job["tasks"][task_id]:
+        if job["tasks"][task_id]["completed"]:
             print(f"[i] Tarea '{task_id}' ya estaba marcada como completada")
             return
 
-        job["tasks"][task_id] = True
+        job["tasks"][task_id]["completed"] = True
         self.collection.update(job)
         print(f"[✔] Tarea '{task_id}' completada en job '{job_id}'")
 
@@ -131,7 +139,7 @@ class GestorTareas:
             await self.on_task_complete_callback(job_id, task_id)
 
         # Si todas las tareas del job están completas
-        if all(job["tasks"].values()):
+        if all(t["completed"] for t in job["tasks"].values()):
             print(f"[🎉] Job '{job_id}' completado")
             if self.on_complete_callback:
                 await self.on_complete_callback(job_id)
@@ -150,14 +158,12 @@ class GestorTareas:
     def _all_jobs_completed(self) -> bool:
         cursor = self.collection.find({})
         for job in cursor:
-            if not all(job["tasks"].values()):
+            if not all(t["completed"] for t in job["tasks"].values()):
                 return False
         return True
 
-
 ########################################
 # Para pruebas y demostración
-
 
 # Callbacks de pruebas
 
@@ -169,9 +175,8 @@ async def on_job_complete(job_id):
 
 async def on_all_jobs_complete():
     print("🌍🌍🌍🌍🌍🌍🌍🌍 Callback: Todos los jobs completados.")
-   
 
-# Ejemplo de uso
+# Ejemplo de uso adaptado
 async def main():
     monitor = GestorTareas(
         on_complete_callback=on_job_complete,
@@ -181,13 +186,16 @@ async def main():
 
     await monitor.start()
 
-    # Crear el job y obtener el job_id generado
-    task_ids = [f"task-{i}" for i in range(3)]
-    job_id = await monitor.add_job(task_ids=task_ids)
+    # Crear el job y obtener el job_id generado usando tareas con campos adicionales
+    tasks = [
+        {"task_id": "task_id_1", "card_id": "card_id_1", "xxx_id": "xxx_id_1"},
+        {"task_id": "task_id_2", "card_id": "card_id_2"}
+    ]
+    job_id = await monitor.add_job(tasks)
 
-    # Simular finalización de tareas
-    for task_id in task_ids:
-        await monitor.task_completed(job_id, task_id)
+    # Simular finalización de tareas usando los task_id de la lista de tareas
+    for task in tasks:
+        await monitor.task_completed(job_id, task["task_id"])
 
     # Mantener corriendo para escuchar mensajes reales
     try:
@@ -198,4 +206,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
