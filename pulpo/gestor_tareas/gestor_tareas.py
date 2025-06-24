@@ -112,18 +112,7 @@ class GestorTareas:
         self.collection.update(job)
         print(f"[✔] Tarea '{task_id}' del job '{job_id}' actualizada con {updates}")
         return True
-
-    def get_task_field_by_task_id(self, task_id: str, field: str):
-        """
-        Busca en todos los jobs el valor de un campo concreto (field) asociado a un task_id.
-        Devuelve el valor si lo encuentra, si no None.
-        """
-        cursor = self.collection.find({})
-        for job in cursor:
-            tasks = job.get("tasks", {})
-            if task_id in tasks:
-                return tasks[task_id].get(field)
-        return None
+    
     
     def get_task_field(self, job_id: str, task_id: str, field: str):
         """
