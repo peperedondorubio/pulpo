@@ -124,6 +124,20 @@ class GestorTareas:
             if task_id in tasks:
                 return tasks[task_id].get(field)
         return None
+    
+    def get_task_field(self, job_id: str, task_id: str, field: str):
+        """
+        Busca en el job indicado el valor de un campo concreto (field) asociado a un task_id.
+        Devuelve el valor si lo encuentra, si no None.
+        """
+        job = self.collection.get(job_id)
+        if not job:
+            return None
+        tasks = job.get("tasks", {})
+        if task_id in tasks:
+            return tasks[task_id].get(field)
+        return None
+
 
     async def _publicar_tarea(self, msg: dict):
         await self.producer.publish(TOPIC_TASK, msg)
