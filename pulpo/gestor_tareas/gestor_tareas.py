@@ -64,7 +64,10 @@ class GestorTareas:
 
     async def stop(self):
         if self.crear_consumer:
-            await self.consumer.stop()
+            try:
+                await self.consumer.stop()
+            except Exception as e:
+                print(f"[!] Problema al parar consumer Kafka: {e}")
         await self.producer.stop()
 
     async def add_job(self, tasks: list[dict], job_id: str = None):
@@ -247,7 +250,7 @@ async def main2():
 
 if __name__ == "__main__":
     
-    asyncio.run(main2())
+    asyncio.run(main())
 
 
     
