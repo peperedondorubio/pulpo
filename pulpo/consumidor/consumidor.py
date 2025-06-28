@@ -24,7 +24,6 @@ class KafkaEventConsumer:
             self.topic,
             bootstrap_servers=broker,  # Asegúrate de que sea IP/host accesible desde el contenedor
             group_id=self.id_grupo,
-            enable_auto_commit=False,
             # 🔹 Timeouts ajustados para entornos inestables:
             session_timeout_ms=30000,           # 30 segundos (default: 10s)
             heartbeat_interval_ms=10000,        # 10 segundos (default: 3s)
@@ -32,7 +31,10 @@ class KafkaEventConsumer:
             request_timeout_ms=40000,           # 40 segundos (default: 40s)
             retry_backoff_ms=2000,              # 2 segundos entre reintentos (default: 100ms)
             auto_offset_reset="earliest",       # Lee desde el inicio si no hay offset
-            isolation_level="read_committed"
+            isolation_level="read_committed",
+            enable_auto_commit=True,
+            auto_commit_interval_ms=5000
+            
         )
 
         await self.consumer.start()
