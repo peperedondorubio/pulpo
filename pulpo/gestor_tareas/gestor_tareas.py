@@ -74,28 +74,39 @@ class GestorTareas:
         if job_id is None:
             job_id = str(uuid.uuid4())
 
-        # Construir el diccionario de tareas
-        doc = {
-            "_key": job_id,
-            "tasks": {
-                task["task_id"]: {
-                    **{k: v for k, v in task.items() if k != "task_id"},
-                    "completed": False  # Campo fijo siempre presente
-                }
-                for task in tasks
-            }
-        }
-
-        if not self.collection.has(job_id):
-            self.collection.insert(doc)
+        nuevas_tareas = []
+        if self.collection.has(job_id):
+            job = self.collection.get(job_id)
+            existing_tasks = job.get("tasks", {})
+            for task in tasks:
+                if task["task_id"] not in existing_tasks:
+                    existing_tasks[task["task_id"]] = {
+                        **{k: v for k, v in task.items() if k != "task_id"},
+                        "completed": False
+                    }
+                    nuevas_tareas.append(task)
+            job["tasks"] = existing_tasks
+            self.collection.update(job)
         else:
-            self.collection.update(doc)
+            # Si no existe, crea el job con las tareas nuevas
+            doc = {
+                "_key": job_id,
+                "tasks": {
+                    task["task_id"]: {
+                        **{k: v for k, v in task.items() if k != "task_id"},
+                        "completed": False
+                    }
+                    for task in tasks
+                }
+            }
+            self.collection.insert(doc)
+            nuevas_tareas = tasks  # Todas son nuevas
 
-        print(f"Job '{job_id}' creado con tareas: {[task['task_id'] for task in tasks]}")
+        print(f"Job '{job_id}' actualizado/creado con tareas: {[task['task_id'] for task in nuevas_tareas]}")
 
-        # Publicar inicio de tareas
+        # Publicar inicio de tareas SOLO para las nuevas
         tasks_msgs = []
-        for task in tasks:
+        for task in nuevas_tareas:
             msg = {
                 "job_id": job_id,
                 "task_id": task["task_id"],
