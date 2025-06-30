@@ -127,6 +127,17 @@ class GestorTareas:
         print(f"[✔] Tarea '{task_id}' del job '{job_id}' actualizada con {updates}")
         return True
     
+    def update_job(self, job_id: str, updates: dict):
+        job = self.collection.get(job_id)
+        if not job:
+            print(f"[!] No se encontró el job '{job_id}'")
+            return False
+
+        job.update(updates)
+        self.collection.update(job)
+        print(f"[✔] Job '{job_id}' actualizado con {updates}")
+        return True
+
     
     def get_task_field(self, job_id: str, task_id: str, field: str):
         """
